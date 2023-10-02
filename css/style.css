@@ -1,6 +1,9 @@
-span{
+span, #searchName::placeholder, i{
     font-family: 'Play', sans-serif;
     color: #1F376F;
+}
+#menu a:hover{
+    background-color: rgb(214, 214, 214);
 }
 .btn-menu span{
     line-height: 40px;
@@ -10,15 +13,16 @@ span{
     width: 500px; 
     height: 40px;
 }
+#btnFilter, .btn-menu:first-child, .btn-menu:last-child, #searchName{
+    border: 2px solid #1F376F;
+}
 .btn-menu:first-child{
     border-bottom-left-radius: 8px;
     border-top-left-radius: 8px;
-    border: 2px solid #1F376F;
 }
 .btn-menu:last-child {
     border-bottom-right-radius: 8px;
     border-top-right-radius: 8px;
-    border: 2px solid #1F376F;
 }
 .btn-menu:nth-child(2){
     border-bottom: 2px solid #1F376F;
