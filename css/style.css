@@ -1,0 +1,27 @@
+span{
+    font-family: 'Play', sans-serif;
+    color: #1F376F;
+}
+.btn-menu span{
+    line-height: 40px;
+    vertical-align: middle;
+}
+#menu{
+    width: 500px; 
+    height: 40px;
+}
+.btn-menu:first-child{
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+    border: 2px solid #1F376F;
+}
+.btn-menu:last-child {
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+    border: 2px solid #1F376F;
+}
+.btn-menu:nth-child(2){
+    border-bottom: 2px solid #1F376F;
+    border-top: 2px solid #1F376F;
+}
+
