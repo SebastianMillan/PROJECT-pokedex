@@ -1,4 +1,4 @@
-span, #searchName::placeholder, i{
+span, #searchName::placeholder, i, .card-videojuego{
     font-family: 'Play', sans-serif;
     color: #1F376F;
 }
@@ -13,7 +13,8 @@ span, #searchName::placeholder, i{
     width: 500px; 
     height: 40px;
 }
-#btnFilter, .btn-menu:first-child, .btn-menu:last-child, #searchName{
+#btnFilter, .btn-menu:first-child, .btn-menu:last-child, #searchName, .card-videojuego, .pokemon-inicial1,
+.pokemon-inicial2, .pokemon-inicial3{
     border: 2px solid #1F376F;
 }
 .btn-menu:first-child{
@@ -27,6 +28,15 @@ span, #searchName::placeholder, i{
 .btn-menu:nth-child(2){
     border-bottom: 2px solid #1F376F;
     border-top: 2px solid #1F376F;
+}
+.card-videojuego{
+    height: 360px;
+    border-radius: 8px;
+}
+.pokemon-inicial1, .pokemon-inicial2, .pokemon-inicial3{
+    border-radius: 50%;
+    margin:5px;
+    background-color: rgb(207, 207, 207);
 }
 
 .borderCard{
