@@ -8,6 +8,7 @@ $(document).ready(function(){
     }).done(function(resp){
 
         var pokedex = resp.results;
+        var pokemon 
         
         pokedex.forEach(function(pokemon){
         
