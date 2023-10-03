@@ -2,7 +2,11 @@ $(document).ready(() => {
 
     $.ajax({
         type: "GET",
-        url: "https://pokeapi.co/api/v2/generation/"
+        url: "https://pokeapi.co/api/v2/generation/",
+        data: {
+            limit: 5, order: 'desc'
+        },
+
     }).done(respuesta => {
 
         /*
