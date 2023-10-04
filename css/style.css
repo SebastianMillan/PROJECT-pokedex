@@ -41,3 +41,38 @@ span, #searchName::placeholder, i, .card-videojuego{
     background-color: rgb(207, 207, 207);
 }
 
+.borderCard{
+
+    width: 100%;
+    border-radius: 25px;
+    border: 3px solid;
+    
+}
+
+.imgPokemon{
+
+    width: 150px;
+
+}
+
+.nombrePokemon{
+    
+        font-family: play;
+        font-size: 20px;
+        text-align: center;
+        margin-top: 40px;
+        
+}
+
+.idPokemon{
+    font-family: play;
+    font-size: 15px;
+}
+
+.tipo{
+
+    border-radius: 50%;
+    margin-top: 35px;
+    margin-left: 10px;
+}
+
