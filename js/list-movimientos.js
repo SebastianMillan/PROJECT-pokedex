@@ -17,9 +17,9 @@ $(document).ready(() => {
             }).done(mov => {
                 var firstLetter = mov.name.split('')[0].toUpperCase();
                 var nombreMov = (firstLetter + mov.name.slice(1)).replace("-", " ");
-                console.log(mov.damage_class.name)
+                console.log(mov.type.name)
                 var cardMovimiento = `<div class="col-4 movimiento mb-3">
-                        <div class="card-movimiento shadow">
+                        <div class="card-movimiento shadow" style="border-color: ${colorBorderTipo(mov.type.name)}!important" >
                             <div class="row">
                                 <div class="col-4">
                                     <div class="img-tipo-movimiento p-1">
@@ -47,8 +47,72 @@ $(document).ready(() => {
     });
 
 
-    function getImgTipo(tipoAtaque) {
+    function colorBorderTipo(tipoAtaque) {
         switch (tipoAtaque) {
+            case 'grass':
+                colorBorde = '#5CBE64';
+                break;
+            case 'fire':
+                colorBorde = '#FBAE46';
+                break;
+            case 'water':
+                colorBorde = '#6CBDE4';
+                break;
+            case 'poison':
+                colorBorde = '#C261D4';
+                break;
+            case 'bug':
+                colorBorde = '#AFC836';
+                break;
+            case 'ground':
+                colorBorde = '#D29463';
+                break;
+            case 'dark':
+                colorBorde = '#9298A4';
+                break;
+            case 'electric':
+                colorBorde = '#FBE273';
+                break;
+            case 'fairy':
+                colorBorde = '#F3A7E7';
+                break;
+            case 'fighting':
+                colorBorde = '#E74347';
+                break;
+            case 'ghost':
+                colorBorde = '#7773D4';
+                break;
+            case 'ice':
+                colorBorde = '#8CDDD4';
+                break;
+            case 'normal':
+                colorBorde = '#A3A49E';
+                break;
+            case 'psychic':
+                colorBorde = '#FE9F92';
+                break;
+            case 'rock':
+                colorBorde = '#D7CD90'
+                break;
+            case 'steel':
+                colorBorde = '#58A6AA';
+                break;
+            case 'dragon':
+                colorBorde = '#0180C7';
+                break;
+            case 'flying':
+                colorBorde = '#A6C2F2';
+                break;
+            default:
+                colorBorde = '#000000';
+                break;
+        }
+
+        return colorBorde;
+    }
+
+    function getImgTipo(modoAtaque) {
+        switch (modoAtaque) {
             case 'physical':
                 return "../img/ataque_fisico.PNG"
                 break;
