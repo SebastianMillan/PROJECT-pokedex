@@ -14,7 +14,7 @@ span, #searchName::placeholder, i, .card-videojuego{
     height: 40px;
 }
 #btnFilter, .btn-menu:first-child, .btn-menu:last-child, #searchName, .card-videojuego, .pokemon-inicial1,
-.pokemon-inicial2, .pokemon-inicial3, .card-movimiento{
+.pokemon-inicial2, .pokemon-inicial3, .card-movimiento, #filtradoTipoMov{
     border: 2px solid #1F376F;
 }
 .btn-menu:first-child{
