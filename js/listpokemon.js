@@ -7,12 +7,14 @@ $(document).ready(function () {
         }
     }).done(function (resp) {
         var pokedex = resp.results;
-
         pokedex.forEach(function (pokemon) {
             $.ajax({
                 type: "GET",
                 url: pokemon.url
             }).done(function (pokemonInfo) {
+
+                var primeraLetra = pokemonInfo.name.split('')[0].toUpperCase();
+                var nombreBien = (primeraLetra + pokemonInfo.name.slice(1).replace("-", " "));
 
                 var template = `
                     <div class="col-md-4 mb-2">
@@ -20,11 +22,11 @@ $(document).ready(function () {
                             <div class="row">
                                 <div class="col-md-4">
                                     <img src="${pokemonInfo.sprites.front_default}"
-                                         alt="${pokemonInfo.name}" class="imgPokemon"></img>
+                                         alt="${nombreBien}" class="imgPokemon"></img>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="nombrePokemon"><strong>${pokemonInfo.name}</strong><br><span class="idPokemon">
-                                    ${pokemonInfo.id}</span></p>
+                                    <p class="nombrePokemon"><strong>${nombreBien}</strong><br><span class="idPokemon">
+                                    #${pokemonInfo.id}</span></p>
                                 </div>
                                 <div class="col-md-4">       
                                     <div class="tipo w-50"><img src="${colocarFotoTipo(pokemonInfo)}"></img></div>                                    
@@ -192,73 +194,73 @@ $(document).ready(function () {
         switch (tipo){
 
             case 'dragon':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/7/70/Dragon_icon_SwSh.png/96px-Dragon_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/7/70/Dragon_icon_SwSh.png/80px-Dragon_icon_SwSh.png';
                 break;
             
             case 'grass':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/a/a8/Grass_icon_SwSh.png/96px-Grass_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/a/a8/Grass_icon_SwSh.png/80px-Grass_icon_SwSh.png';
                 break;
 
             case 'fire':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/a/ab/Fire_icon_SwSh.png/96px-Fire_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/a/ab/Fire_icon_SwSh.png/80px-Fire_icon_SwSh.png';
                 break;
 
             case 'water':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/8/80/Water_icon_SwSh.png/96px-Water_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/8/80/Water_icon_SwSh.png/80px-Water_icon_SwSh.png';
                 break;
             
             case 'poison':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/8/8d/Poison_icon_SwSh.png/96px-Poison_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/8/8d/Poison_icon_SwSh.png/80px-Poison_icon_SwSh.png';
                 break;
 
             case 'bug':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/9/9c/Bug_icon_SwSh.png/96px-Bug_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/9/9c/Bug_icon_SwSh.png/80px-Bug_icon_SwSh.png';
                 break;
 
             case 'ground':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/2/27/Ground_icon_SwSh.png/96px-Ground_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/2/27/Ground_icon_SwSh.png/80px-Ground_icon_SwSh.png';
                 break;
 
             case 'dark':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/d/d5/Dark_icon_SwSh.png/96px-Dark_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/d/d5/Dark_icon_SwSh.png/80px-Dark_icon_SwSh.png';
                 break;
 
             case 'electric':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/7/7b/Electric_icon_SwSh.png/96px-Electric_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/7/7b/Electric_icon_SwSh.png/80px-Electric_icon_SwSh.png';
                 break;
 
             case 'fairy':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/c/c6/Fairy_icon_SwSh.png/96px-Fairy_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/c/c6/Fairy_icon_SwSh.png/80px-Fairy_icon_SwSh.png';
                 break;
 
             case 'fighting':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/3/3b/Fighting_icon_SwSh.png/96px-Fighting_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/3/3b/Fighting_icon_SwSh.png/80px-Fighting_icon_SwSh.png';
 
             case 'ghost':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/0/01/Ghost_icon_SwSh.png/96px-Ghost_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/0/01/Ghost_icon_SwSh.png/80px-Ghost_icon_SwSh.png';
                 break;
 
             case 'ice':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/1/15/Ice_icon_SwSh.png/96px-Ice_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/1/15/Ice_icon_SwSh.png/80px-Ice_icon_SwSh.png';
                 break;
 
             case 'normal':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/9/95/Normal_icon_SwSh.png/96px-Normal_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/9/95/Normal_icon_SwSh.png/80px-Normal_icon_SwSh.png';
                 break;
 
             case 'psychic':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/7/73/Psychic_icon_SwSh.png/96px-Psychic_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/7/73/Psychic_icon_SwSh.png/80px-Psychic_icon_SwSh.png';
 
             case 'rock':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/1/11/Rock_icon_SwSh.png/96px-Rock_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/1/11/Rock_icon_SwSh.png/80px-Rock_icon_SwSh.png';
                 break;
 
             case 'steel':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/0/09/Steel_icon_SwSh.png/96px-Steel_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/0/09/Steel_icon_SwSh.png/80px-Steel_icon_SwSh.png';
                 break;
 
             case 'flying':
-                foto = 'https://archives.bulbagarden.net/media/upload/thumb/b/b5/Flying_icon_SwSh.png/96px-Flying_icon_SwSh.png';
+                foto = 'https://archives.bulbagarden.net/media/upload/thumb/b/b5/Flying_icon_SwSh.png/80px-Flying_icon_SwSh.png';
                 break;
 
             default:
