@@ -50,6 +50,18 @@ $(document).ready(function () {
             type: 'GET'
         }).done(function (resp) {   
 
+            $('#fotoPokemon').attr('src', resp.sprites.front_default);
+            $('#nombrePokemon').text(resp.name);
+            $('#numPokemon').text('#' + resp.id);
+            $('#tipoPokemon').text(resp.types[0].type.name + ', ' + resp.types[1].type.name);
+            $('#habilidadPokemon').text(resp.abilities[0].ability.name);
+            $('#psPokemon').text(resp.stats[0].base_stat);
+            $('#ataquePokemon').text(resp.stats[1].base_stat);
+            $('#defensaPokemon').text(resp.stats[2].base_stat);
+            $('#ataqueEspecialPokemon').text(resp.stats[3].base_stat);
+            $('#defensaEspecialPokemon').text(resp.stats[4].base_stat);
+            $('#velocidadPokemon').text(resp.stats[5].base_stat);
+
             $('#modalPokemon').modal('show');
 
         });
