@@ -81,8 +81,7 @@
         </header>
         <main>
             <div class="container">
-                <div class="row p-4" id="list-pokemon">
-                </div>
+                <div class="row p-4" id="list-pokemon"></div>
             </div>
         </main>
         <footer>
@@ -90,6 +89,42 @@
                 @POKEDEX-PROJECT Fernando Claro de Diego / Sebastián Millán Ordóñez
             </div>
         </footer>
+
+        <!-- Modal -->
+
+        <div class="modal modal-lg fade" id="modalPokemon" tabindex="-1" aria-labelledby="modalPokemonLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-5">
+                                <div>
+                                    <img src="../img/imagen-notfound.jpg" alt="imagen del pokemon" class="w-75 m-3"
+                                        id="imgPokemon">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <span class="fw-bold fs-3" id="nombrePokemon"></span><br>
+                                <span>ID: #<span id="numPokemon"></span></span><br>
+                                <span>Tipo: <span id="tipoPokemon"></span></span><br>
+                                <span>Habilidad: <span id="habilidadPokemon"></span></span><br>
+                                <span>PV: <span id="psPokemon"></span></span><br>
+                                <span>Ataque: <span id="atPokemon"></span></span><br>
+                                <span>Defensa: <span id="defPokemon"></span></span><br>
+                                <span>Ataque Especial: <span id="saPokemon"></span></span><br>
+                                <span>Defensa Especial: <span id="sdEspecial"></span></span><br>
+                                <span>Velocidad: <span id="velPokemon"></span></span><br>
+                            </div>
+                            <div class="col-1">
+                                <img src="../img/ataque_fisico.PNG" alt="tipo del pokemon" class="w-100" id="imgTipoPokemon">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--Scripts-->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

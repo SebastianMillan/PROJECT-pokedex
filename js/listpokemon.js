@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $.ajax({
-        url: 'https://pokeapi.co/api/v2/pokemon/?limit=151',
+        url: 'https://pokeapi.co/api/v2/pokemon/?limit=151&offset=0',
         type: 'GET',
         data: {
             limit: 151, order: 'desc'
@@ -18,7 +18,7 @@ $(document).ready(function () {
 
                 var template = `
                     <div class="col-md-4 mb-2">
-                        <div class="borderCard" style="border-color: ${cambiarColorBorde(pokemonInfo)}!important">
+                        <div class="borderCard" style="border-color: ${cambiarColorBorde(pokemonInfo)}!important" idPokemon=${pokemonInfo.id}>
                             <div class="row">
                                 <div class="col-md-4">
                                     <img src="${pokemonInfo.sprites.front_default}"
@@ -42,14 +42,43 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.borderCard', function () {
-        var numPokemon = $(this).find('.idPokemon').text(); // Usar .find() para obtener el ID
+
+        var numPokemon = $(this).attr('idPokemon');
+
         $.ajax({
             url: 'https://pokeapi.co/api/v2/pokemon/' + numPokemon,
             type: 'GET'
-        }).done(function (resp) {
-            $('#modalPokemon').show();
+
+        }).done(function (resp) {   
+
+            $('#fotoPokemon').attr('src', resp.sprites.front_default);
+            $('#nombrePokemon').text(formatNames(resp.name));
+            $('#numPokemon').text(resp.id);
+            if(resp.types.length == 1)
+                $('#tipoPokemon').text(formatNames(resp.types[0].type.name));
+            else
+                $('#tipoPokemon').text(formatNames(resp.types[0].type.name) + " / " + formatNames(resp.types[1].type.name));
+            $('#habilidadPokemon').text(formatNames(resp.abilities[0].ability.name));
+            $('#psPokemon').text(resp.stats[0].base_stat);
+            $('#atPokemon').text(resp.stats[1].base_stat);
+            $('#defPokemon').text(resp.stats[2].base_stat);
+            $('#saPokemon').text(resp.stats[3].base_stat);
+            $('#sdEspecial').text(resp.stats[4].base_stat);
+            $('#velPokemon').text(resp.stats[5].base_stat);
+            $('.modal-content').css("border-color", cambiarColorBorde(resp));
+            $('.modal-content').css("border-width", "5px");
+            $('#imgTipoPokemon').attr('src', colocarFotoTipo(resp));
+            $('#imgPokemon').attr('src', resp.sprites.front_default);
+
+            $('#modalPokemon').modal('show');
+
         });
     });
+
+    function formatNames(nameSinFormat) {
+        var firstLetter = nameSinFormat.split('')[0].toUpperCase();
+        return (firstLetter + nameSinFormat.slice(1)).replace("-", " ");
+    }
 
     function cambiarColorBorde(pokemon) {
         var tipo = pokemon.types[0].type.name;
@@ -235,6 +264,7 @@ $(document).ready(function () {
 
             case 'fighting':
                 foto = 'https://archives.bulbagarden.net/media/upload/thumb/3/3b/Fighting_icon_SwSh.png/80px-Fighting_icon_SwSh.png';
+                break;
 
             case 'ghost':
                 foto = 'https://archives.bulbagarden.net/media/upload/thumb/0/01/Ghost_icon_SwSh.png/80px-Ghost_icon_SwSh.png';
@@ -250,6 +280,7 @@ $(document).ready(function () {
 
             case 'psychic':
                 foto = 'https://archives.bulbagarden.net/media/upload/thumb/7/73/Psychic_icon_SwSh.png/80px-Psychic_icon_SwSh.png';
+                break;
 
             case 'rock':
                 foto = 'https://archives.bulbagarden.net/media/upload/thumb/1/11/Rock_icon_SwSh.png/80px-Rock_icon_SwSh.png';
@@ -265,6 +296,7 @@ $(document).ready(function () {
 
             default:
                 return foto;
+                break;
         }
 
         return foto;
