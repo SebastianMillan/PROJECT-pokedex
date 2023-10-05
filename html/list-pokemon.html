@@ -92,28 +92,34 @@
 
         <!-- Modal -->
 
-        <div class="modal" tabindex="-1" id="modalPokemon">
-            <div class="modal-dialog">
+        <div class="modal modal-lg fade" id="modalPokemon" tabindex="-1" aria-labelledby="modalPokemonLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="nombrePokemon"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
                     <div class="modal-body">
-                        <img src="" class="fotoPokemon">
-                        <span class="numPokemon"></span>
-                        <span class="tipoPokemon"></span>
-                        <span class="habilidadPokemon"></span>
-                        <span class="psPokemon"></span>
-                        <span class="attPokemon"></span>
-                        <span class="defPokemon"></span>
-                        <span class="spaPokemon"></span>
-                        <span class="spdPokemon"></span>
-                        <span class="velPokemon"></span>         
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <div class="row">
+                            <div class="col-5">
+                                <div>
+                                    <img src="../img/imagen-notfound.jpg" alt="imagen del pokemon" class="w-75 m-3"
+                                        id="imgPokemon">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <span class="fw-bold fs-3" id="nombrePokemon"></span><br>
+                                <span>ID: #<span id="numPokemon"></span></span><br>
+                                <span>Tipo: <span id="tipoPokemon"></span></span><br>
+                                <span>Habilidad: <span id="habilidadPokemon"></span></span><br>
+                                <span>PV: <span id="psPokemon"></span></span><br>
+                                <span>Ataque: <span id="atPokemon"></span></span><br>
+                                <span>Defensa: <span id="defPokemon"></span></span><br>
+                                <span>Ataque Especial: <span id="saPokemon"></span></span><br>
+                                <span>Defensa Especial: <span id="sdEspecial"></span></span><br>
+                                <span>Velocidad: <span id="velPokemon"></span></span><br>
+                            </div>
+                            <div class="col-1">
+                                <img src="../img/ataque_fisico.PNG" alt="tipo del pokemon" class="w-100" id="imgTipoPokemon">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $.ajax({
-        url: 'https://pokeapi.co/api/v2/pokemon/?limit=151',
+        url: 'https://pokeapi.co/api/v2/pokemon/?limit=151&offset=0',
         type: 'GET',
         data: {
             limit: 151, order: 'desc'
@@ -48,24 +48,37 @@ $(document).ready(function () {
         $.ajax({
             url: 'https://pokeapi.co/api/v2/pokemon/' + numPokemon,
             type: 'GET'
+
         }).done(function (resp) {   
 
             $('#fotoPokemon').attr('src', resp.sprites.front_default);
-            $('#nombrePokemon').text(resp.name);
-            $('#numPokemon').text('#' + resp.id);
-            $('#tipoPokemon').text(resp.types[0].type.name + ', ' + resp.types[1].type.name);
-            $('#habilidadPokemon').text(resp.abilities[0].ability.name);
+            $('#nombrePokemon').text(formatNames(resp.name));
+            $('#numPokemon').text(resp.id);
+            if(resp.types.length == 1)
+                $('#tipoPokemon').text(formatNames(resp.types[0].type.name));
+            else
+                $('#tipoPokemon').text(formatNames(resp.types[0].type.name) + " / " + formatNames(resp.types[1].type.name));
+            $('#habilidadPokemon').text(formatNames(resp.abilities[0].ability.name));
             $('#psPokemon').text(resp.stats[0].base_stat);
-            $('#ataquePokemon').text(resp.stats[1].base_stat);
-            $('#defensaPokemon').text(resp.stats[2].base_stat);
-            $('#ataqueEspecialPokemon').text(resp.stats[3].base_stat);
-            $('#defensaEspecialPokemon').text(resp.stats[4].base_stat);
-            $('#velocidadPokemon').text(resp.stats[5].base_stat);
+            $('#atPokemon').text(resp.stats[1].base_stat);
+            $('#defPokemon').text(resp.stats[2].base_stat);
+            $('#saPokemon').text(resp.stats[3].base_stat);
+            $('#sdEspecial').text(resp.stats[4].base_stat);
+            $('#velPokemon').text(resp.stats[5].base_stat);
+            $('.modal-content').css("border-color", cambiarColorBorde(resp));
+            $('.modal-content').css("border-width", "5px");
+            $('#imgTipoPokemon').attr('src', colocarFotoTipo(resp));
+            $('#imgPokemon').attr('src', resp.sprites.front_default);
 
             $('#modalPokemon').modal('show');
 
         });
     });
+
+    function formatNames(nameSinFormat) {
+        var firstLetter = nameSinFormat.split('')[0].toUpperCase();
+        return (firstLetter + nameSinFormat.slice(1)).replace("-", " ");
+    }
 
     function cambiarColorBorde(pokemon) {
         var tipo = pokemon.types[0].type.name;
