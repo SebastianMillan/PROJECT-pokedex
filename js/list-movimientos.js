@@ -46,8 +46,7 @@ $(document).ready(() => {
     $(document).on('click', '.movimiento', function () {
 
         var movId = $(this).attr('movId');
-        console.log(movId)
-        console.log("asd")
+
         $.ajax({
             url: `https://pokeapi.co/api/v2/move/${movId}`,
             type: 'GET'
@@ -62,8 +61,8 @@ $(document).ready(() => {
             $('#ppMov').text(mov.pp != null ? mov.pp : 0);
             $('#imgModoMov').attr("src", getImgModo(mov.damage_class.name));
             $('#imgTipoMov').attr("src", getTipoMov(mov));
-
-
+            $('.modal-content').css("border-color", colorBorderTipo(mov.type.name));
+            $('.modal-content').css("border-width", "5px");
             $('#detalleMove').modal('show');
         });
 
@@ -137,13 +136,13 @@ $(document).ready(() => {
     function getImgModo(modoAtaque) {
         switch (modoAtaque) {
             case 'physical':
-                return "../img/ataque_fisico.PNG"
+                return "../img/ataque_fisico.png"
                 break;
             case 'status':
-                return "../img/ataque_sin_efecto.PNG"
+                return "../img/ataque_sin_efecto.png"
                 break;
             case 'special':
-                return "../img/ataque_especial.PNG"
+                return "../img/ataque_especial.png"
                 break;
             default:
                 return "0"
