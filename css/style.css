@@ -64,6 +64,11 @@ span, #searchName::placeholder, i, .card-videojuego{
     
 }
 
+.borderCard:hover{
+
+    background-color: lightgray;
+}
+
 .imgPokemon{
 
     width: 150px;
