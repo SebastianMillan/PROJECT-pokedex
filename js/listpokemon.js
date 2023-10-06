@@ -1,6 +1,7 @@
 $(document).ready(function () {
+
     $.ajax({
-        url: 'https://pokeapi.co/api/v2/pokemon/?limit=151&offset=0',
+        url: 'https://pokeapi.co/api/v2/pokemon/',
         type: 'GET',
         data: {
             limit: 151, order: 'desc'
@@ -300,5 +301,36 @@ $(document).ready(function () {
         }
 
         return foto;
+    }
+
+    function ordenarPorIdAsc(pokemon){
+
+        var listaAscendente = pokemon.id.sort();
+
+        return listaAscendente;
+    }
+
+    function ordenarPorIdDesc(pokemon){
+
+        var lista = pokemon.id.sort();
+        var listaDescendente = lista.reverse();
+
+        return listaDescendente;
+    }
+
+    function ordenarPorNombreAsc(pokemon){
+
+        var listaAsc = pokemon.name.sort();
+
+        return listaAsc;
+
+    }
+
+    function ordenarPorNombreDesc(pokemon){
+
+        var lista = pokemon.name.sort();
+        var listaDesc = lista.reverse();
+
+        return listaDesc;
     }
 });
