@@ -2,6 +2,9 @@ span, #searchName::placeholder, i, .card-videojuego, .nombrePokemon, .idPokemon{
     font-family: 'Play', sans-serif;
     color: #1F376F;
 }
+.page:hover{
+    font-weight: bold;
+}
 #menu a:hover, .card-movimiento:hover{
     background-color: rgb(214, 214, 214);
 }

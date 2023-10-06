@@ -1,22 +1,39 @@
 $(document).ready(function () {
-    $.ajax({
-        url: 'https://pokeapi.co/api/v2/pokemon/?limit=151&offset=0',
-        type: 'GET',
-        data: {
-            limit: 151, order: 'desc'
-        }
-    }).done(function (resp) {
-        var pokedex = resp.results;
-        pokedex.forEach(function (pokemon) {
-            $.ajax({
-                type: "GET",
-                url: pokemon.url
-            }).done(function (pokemonInfo) {
 
-                var primeraLetra = pokemonInfo.name.split('')[0].toUpperCase();
-                var nombreBien = (primeraLetra + pokemonInfo.name.slice(1).replace("-", " "));
+    var pages;
+    var numOffset = 0;
+    var limit = 42;
+    cargarPokemons(numOffset);
+    $(document).on('click', '.page', function () {
+        var numPage = $(this).attr('page')
+        numOffset = limit * (numPage - 1);
+        cargarPokemons(numOffset);
+    });
+    function cargarPokemons(numOffset) {
+        $.ajax({
+            url: 'https://pokeapi.co/api/v2/pokemon/?limit=' + limit + '&offset=' + numOffset,
+            type: 'GET',
+        }).done(function (resp) {
+            console.log(limit)
+            pages = Math.ceil(resp.count / limit);
 
-                var template = `
+            var templatePag;
+            for (let i = pages; i > 0; i--) {
+                templatePag = `<span class="p-1 page" page="${i}">${i}</span>`
+                $('.return-page').after(templatePag);
+            }
+
+            var pokedex = resp.results;
+            pokedex.forEach(function (pokemon) {
+                $.ajax({
+                    type: "GET",
+                    url: pokemon.url
+                }).done(function (pokemonInfo) {
+
+                    var primeraLetra = pokemonInfo.name.split('')[0].toUpperCase();
+                    var nombreBien = (primeraLetra + pokemonInfo.name.slice(1).replace("-", " "));
+
+                    var template = `
                     <div class="col-md-4 mb-2">
                         <div class="borderCard" style="border-color: ${cambiarColorBorde(pokemonInfo)}!important" idPokemon=${pokemonInfo.id}>
                             <div class="row">
@@ -35,11 +52,14 @@ $(document).ready(function () {
                         </div>
                     </div>`;
 
-                $('#list-pokemon').append(template);
+                    $('#list-pokemon').append(template);
 
+                });
             });
         });
-    });
+    }
+
+
 
     $(document).on('click', '.borderCard', function () {
 
@@ -49,12 +69,12 @@ $(document).ready(function () {
             url: 'https://pokeapi.co/api/v2/pokemon/' + numPokemon,
             type: 'GET'
 
-        }).done(function (resp) {   
+        }).done(function (resp) {
 
             $('#fotoPokemon').attr('src', resp.sprites.front_default);
             $('#nombrePokemon').text(formatNames(resp.name));
             $('#numPokemon').text(resp.id);
-            if(resp.types.length == 1)
+            if (resp.types.length == 1)
                 $('#tipoPokemon').text(formatNames(resp.types[0].type.name));
             else
                 $('#tipoPokemon').text(formatNames(resp.types[0].type.name) + " / " + formatNames(resp.types[1].type.name));
@@ -146,12 +166,12 @@ $(document).ready(function () {
         return colorBorde;
     }
 
-    function cambiarColorCirculo (pokemon){
+    function cambiarColorCirculo(pokemon) {
 
         var tipo = pokemon.types[0].type.name;
         var colorCirculo = '';
-        
-        switch (tipo){
+
+        switch (tipo) {
 
             case 'grass':
                 colorCirculo = '#5CBE64';
@@ -215,17 +235,17 @@ $(document).ready(function () {
         return colorCirculo;
     }
 
-    function colocarFotoTipo (pokemon){
+    function colocarFotoTipo(pokemon) {
 
         var tipo = pokemon.types[0].type.name;
         var foto = '';
 
-        switch (tipo){
+        switch (tipo) {
 
             case 'dragon':
                 foto = 'https://archives.bulbagarden.net/media/upload/thumb/7/70/Dragon_icon_SwSh.png/80px-Dragon_icon_SwSh.png';
                 break;
-            
+
             case 'grass':
                 foto = 'https://archives.bulbagarden.net/media/upload/thumb/a/a8/Grass_icon_SwSh.png/80px-Grass_icon_SwSh.png';
                 break;
@@ -237,7 +257,7 @@ $(document).ready(function () {
             case 'water':
                 foto = 'https://archives.bulbagarden.net/media/upload/thumb/8/80/Water_icon_SwSh.png/80px-Water_icon_SwSh.png';
                 break;
-            
+
             case 'poison':
                 foto = 'https://archives.bulbagarden.net/media/upload/thumb/8/8d/Poison_icon_SwSh.png/80px-Poison_icon_SwSh.png';
                 break;
