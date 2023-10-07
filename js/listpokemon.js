@@ -12,7 +12,6 @@ $(document).ready(function () {
         cargarPokemons(numOffset);
     });
     $(document).on('click', '.avanz-page', function () {
-        console.log(pages)
         if (numPage < pages) {
             numPage++;
             numOffset = limit * (numPage);
@@ -23,7 +22,7 @@ $(document).ready(function () {
     $(document).on('click', '.return-page', function () {
         if (numPage > 1) {
             numPage--;
-            numOffset = limit * (numPage - 1);
+            numOffset = limit * (numPage);
             cargarPokemons(numOffset);
         }
 
@@ -42,6 +41,8 @@ $(document).ready(function () {
                 templatePag = `<span class="p-1 page" page="${i}">${i}</span>`
                 $('.return-page').after(templatePag);
             }
+            var numeroPagina = Number(1) + Number(numPage);
+            $('.page:nth-child(' + numeroPagina + ')').css("font-weight", "bold");
             var pokedex = resp.results;
             pokedex.forEach(function (pokemon) {
                 $.ajax({
