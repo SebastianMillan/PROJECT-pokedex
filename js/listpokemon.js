@@ -3,26 +3,45 @@ $(document).ready(function () {
     var pages;
     var numOffset = 0;
     var limit = 42;
+    var numPage = 0;
     cargarPokemons(numOffset);
+
     $(document).on('click', '.page', function () {
-        var numPage = $(this).attr('page')
+        numPage = $(this).attr('page');
         numOffset = limit * (numPage - 1);
         cargarPokemons(numOffset);
     });
+    $(document).on('click', '.avanz-page', function () {
+        console.log(pages)
+        if (numPage < pages) {
+            numPage++;
+            numOffset = limit * (numPage);
+            cargarPokemons(numOffset);
+        }
+
+    });
+    $(document).on('click', '.return-page', function () {
+        if (numPage > 1) {
+            numPage--;
+            numOffset = limit * (numPage - 1);
+            cargarPokemons(numOffset);
+        }
+
+    });
+
     function cargarPokemons(numOffset) {
         $.ajax({
             url: 'https://pokeapi.co/api/v2/pokemon/?limit=' + limit + '&offset=' + numOffset,
             type: 'GET',
         }).done(function (resp) {
-            console.log(limit)
+            $('#list-pokemon').html("");
+            $('.page').remove();
             pages = Math.ceil(resp.count / limit);
-
             var templatePag;
             for (let i = pages; i > 0; i--) {
                 templatePag = `<span class="p-1 page" page="${i}">${i}</span>`
                 $('.return-page').after(templatePag);
             }
-
             var pokedex = resp.results;
             pokedex.forEach(function (pokemon) {
                 $.ajax({

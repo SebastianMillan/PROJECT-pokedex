@@ -1,21 +1,56 @@
 $(document).ready(() => {
 
-    $.ajax({
-        type: "GET",
-        url: "https://pokeapi.co/api/v2/move/",
-        data: {
-            limit: 100, order: 'desc'
-        },
+    var pages;
+    var numOffset = 0;
+    var limit = 42;
+    var numPage = 0;
+    cargarMovimientos(numOffset);
 
-    }).done(respuesta => {
-        var listaMovimientos = respuesta.results;
-        listaMovimientos.forEach(card => {
-            $.ajax({
-                type: "GET",
-                url: card.url,
+    $(document).on('click', '.page', function () {
+        numPage = $(this).attr('page')
+        numOffset = limit * (numPage - 1);
+        cargarMovimientos(numOffset);
+    });
+    $(document).on('click', '.avanz-page', function () {
+        console.log(pages)
+        if (numPage < pages) {
+            numPage++;
+            numOffset = limit * (numPage);
+            cargarMovimientos(numOffset);
+        }
 
-            }).done(mov => {
-                var cardMovimiento = `<div class="col-4 movimiento mb-3" movId="${mov.id}">
+    });
+    $(document).on('click', '.return-page', function () {
+        if (numPage > 1) {
+            numPage--;
+            numOffset = limit * (numPage - 1);
+            cargarMovimientos(numOffset);
+        }
+
+    });
+
+    function cargarMovimientos(numOffset) {
+        $.ajax({
+            type: "GET",
+            url: 'https://pokeapi.co/api/v2/move/?limit= ' + limit + ' &offset=' + numOffset,
+
+        }).done(respuesta => {
+            $('#lista-movimientos').html('');
+            $('.page').remove();
+            pages = Math.ceil(respuesta.count / limit);
+            var templatePag;
+            for (let i = pages; i > 0; i--) {
+                templatePag = `<span class="p-1 page" page="${i}">${i}</span>`
+                $('.return-page').after(templatePag);
+            }
+            var listaMovimientos = respuesta.results;
+            listaMovimientos.forEach(card => {
+                $.ajax({
+                    type: "GET",
+                    url: card.url,
+
+                }).done(mov => {
+                    var cardMovimiento = `<div class="col-4 movimiento mb-3" movId="${mov.id}">
                         <div class="card-movimiento shadow" style="border-color: ${colorBorderTipo(mov.type.name)}!important" >
                             <div class="row">
                                 <div class="col-4">
@@ -35,13 +70,14 @@ $(document).ready(() => {
                             </div>
                         </div>
                     </div>`
-                $('#lista-movimientos').append(cardMovimiento)
+                    $('#lista-movimientos').append(cardMovimiento)
+
+                });
 
             });
 
         });
-
-    });
+    }
 
     $(document).on('click', '.movimiento', function () {
 
