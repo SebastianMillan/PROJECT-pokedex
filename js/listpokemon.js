@@ -1,3 +1,4 @@
+var pokedex = [];
 $(document).ready(function () {
 
     $.ajax({
@@ -7,7 +8,7 @@ $(document).ready(function () {
             limit: 151, order: 'desc'
         }
     }).done(function (resp) {
-        var pokedex = resp.results;
+        pokedex = resp.results;
         pokedex.forEach(function (pokemon) {
             $.ajax({
                 type: "GET",
@@ -303,24 +304,55 @@ $(document).ready(function () {
         return foto;
     }
 
-    function ordenarPorIdAsc(pokemon){
+    function ordenarPokedex(pokedex){
 
-        var listaAscendente = pokemon.id.sort();
+        $('#list-pokemon').empty();
+
+        pokedex.forEach(function (pokemon) {
+ 
+            var template = `
+            <div class="col-md-4 mb-2">
+                <div class="borderCard" style="border-color: ${cambiarColorBorde(pokemonInfo)}!important" idPokemon=${pokemonInfo.id}>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="${pokemonInfo.sprites.front_default}"
+                                 alt="${nombreBien}" class="imgPokemon"></img>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="nombrePokemon"><strong>${nombreBien}</strong><br><span class="idPokemon">
+                            #${pokemonInfo.id}</span></p>
+                        </div>
+                        <div class="col-md-4">       
+                            <div class="tipo w-50"><img src="${colocarFotoTipo(pokemonInfo)}"></img></div>                                    
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+        $('#list-pokemon').append(template);
+    });
+/*
+    function ordenarPorIdAsc(pokedex){
+
+        var listaAscendente = pokedex.id.sort();
+        ordenarPokedex(listaAscendente);
 
         return listaAscendente;
     }
-
+*/
     function ordenarPorIdDesc(pokemon){
 
         var lista = pokemon.id.sort();
         var listaDescendente = lista.reverse();
+        ordenarPokedex(listaDescendente);
 
         return listaDescendente;
     }
-
+/*
     function ordenarPorNombreAsc(pokemon){
 
         var listaAsc = pokemon.name.sort();
+        ordenarPokedex(listaAsc);
 
         return listaAsc;
 
@@ -330,7 +362,31 @@ $(document).ready(function () {
 
         var lista = pokemon.name.sort();
         var listaDesc = lista.reverse();
+        ordenarPokedex(listaDesc);
 
         return listaDesc;
     }
-});
+
+    $('#btnPokAsc').click(function(){
+
+        ordenarPorIdAsc(pokedex);
+    });
+*/
+    $('#btnPokDesc').click(function(){
+            
+        ordenarPorIdDesc(pokedex);
+    });
+/* 
+    $('#btnNomAsc').click(function(){
+
+        ordenarPorNombreAsc(pokedex);
+    
+    });
+
+    $('#btnNomDesc').click(function(){
+            
+        ordenarPorNombreDesc(pokedex);
+    
+    });
+*/
+}});
