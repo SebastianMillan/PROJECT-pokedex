@@ -1,5 +1,6 @@
-var pokedex = [];
 $(document).ready(function () {
+
+    var arrayPokemons = [];
 
     $.ajax({
         url: 'https://pokeapi.co/api/v2/pokemon/',
@@ -8,13 +9,24 @@ $(document).ready(function () {
             limit: 151, order: 'desc'
         }
     }).done(function (resp) {
-        pokedex = resp.results;
+        var  pokedex = resp.results;
         pokedex.forEach(function (pokemon) {
             $.ajax({
                 type: "GET",
                 url: pokemon.url
             }).done(function (pokemonInfo) {
+                arrayPokemons.push(pokemonInfo);
 
+                if(arrayPokemons.length == pokedex.length){
+
+                    $('#btnPokDesc').click(function(){
+            
+                        ordenarPorIdDesc(arrayPokemons);
+                    });
+
+                }
+
+                
                 var primeraLetra = pokemonInfo.name.split('')[0].toUpperCase();
                 var nombreBien = (primeraLetra + pokemonInfo.name.slice(1).replace("-", " "));
 
@@ -304,26 +316,28 @@ $(document).ready(function () {
         return foto;
     }
 
-    function ordenarPokedex(pokedex){
+    function ordenarPokedex(arrayPokemons){
 
         $('#list-pokemon').empty();
 
-        pokedex.forEach(function (pokemon) {
+        arrayPokemons.forEach(function (pokemon) {
  
+            var primeraLetra2 = pokemon.name.split('')[0].toUpperCase();
+            var nombreBien2 = (primeraLetra2 + pokemon.name.slice(1).replace("-", " "));
             var template = `
             <div class="col-md-4 mb-2">
-                <div class="borderCard" style="border-color: ${cambiarColorBorde(pokemonInfo)}!important" idPokemon=${pokemonInfo.id}>
+                <div class="borderCard" style="border-color: ${cambiarColorBorde(pokemon)}!important" idPokemon=${pokemon.id}>
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="${pokemonInfo.sprites.front_default}"
+                            <img src="${pokemon.sprites.front_default}"
                                  alt="${nombreBien}" class="imgPokemon"></img>
                         </div>
                         <div class="col-md-4">
-                            <p class="nombrePokemon"><strong>${nombreBien}</strong><br><span class="idPokemon">
-                            #${pokemonInfo.id}</span></p>
+                            <p class="nombrePokemon"><strong>${nombreBien2}</strong><br><span class="idPokemon">
+                            #${pokemon.id}</span></p>
                         </div>
                         <div class="col-md-4">       
-                            <div class="tipo w-50"><img src="${colocarFotoTipo(pokemonInfo)}"></img></div>                                    
+                            <div class="tipo w-50"><img src="${colocarFotoTipo(pokemon)}"></img></div>                                    
                         </div>
                     </div>
                 </div>
@@ -340,10 +354,12 @@ $(document).ready(function () {
         return listaAscendente;
     }
 */
-    function ordenarPorIdDesc(pokemon){
+    function ordenarPorIdDesc(pokemon){  
 
-        var lista = pokemon.id.sort();
-        var listaDescendente = lista.reverse();
+        var lista = arrayPokemons.sort(function(a,b){
+            return a.id - b.id;
+        }); 
+        var listaDescendente = lista.reverse(); 
         ordenarPokedex(listaDescendente);
 
         return listaDescendente;
@@ -367,26 +383,5 @@ $(document).ready(function () {
         return listaDesc;
     }
 
-    $('#btnPokAsc').click(function(){
-
-        ordenarPorIdAsc(pokedex);
-    });
-*/
-    $('#btnPokDesc').click(function(){
-            
-        ordenarPorIdDesc(pokedex);
-    });
-/* 
-    $('#btnNomAsc').click(function(){
-
-        ordenarPorNombreAsc(pokedex);
-    
-    });
-
-    $('#btnNomDesc').click(function(){
-            
-        ordenarPorNombreDesc(pokedex);
-    
-    });
 */
 }});
