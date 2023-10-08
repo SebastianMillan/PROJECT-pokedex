@@ -15,18 +15,7 @@ $(document).ready(function () {
                 type: "GET",
                 url: pokemon.url
             }).done(function (pokemonInfo) {
-                arrayPokemons.push(pokemonInfo);
-
-                if(arrayPokemons.length == pokedex.length){
-
-                    $('#btnPokDesc').click(function(){
-            
-                        ordenarPorIdDesc(arrayPokemons);
-                    });
-
-                }
-
-                
+                arrayPokemons.push(pokemonInfo);              
                 var primeraLetra = pokemonInfo.name.split('')[0].toUpperCase();
                 var nombreBien = (primeraLetra + pokemonInfo.name.slice(1).replace("-", " "));
 
@@ -160,75 +149,6 @@ $(document).ready(function () {
         return colorBorde;
     }
 
-    function cambiarColorCirculo (pokemon){
-
-        var tipo = pokemon.types[0].type.name;
-        var colorCirculo = '';
-        
-        switch (tipo){
-
-            case 'grass':
-                colorCirculo = '#5CBE64';
-                break;
-            case 'fire':
-                colorCirculo = '#FBAE46';
-                break;
-            case 'water':
-                colorCirculo = '#6CBDE4';
-                break;
-            case 'poison':
-                colorCirculo = '#C261D4';
-                break;
-            case 'bug':
-                colorCirculo = '#AFC836';
-                break;
-            case 'ground':
-                colorCirculo = '#D29463';
-                break;
-            case 'dark':
-                colorCirculo = '#9298A4';
-                break;
-            case 'electric':
-                colorCirculo = '#FBE273';
-                break;
-            case 'fairy':
-                colorCirculo = '#F3A7E7';
-                break;
-            case 'fighting':
-                colorCirculo = '#E74347';
-                break;
-            case 'ghost':
-                colorCirculo = '#7773D4';
-                break;
-            case 'ice':
-                colorCirculo = '#8CDDD4';
-                break;
-            case 'normal':
-                colorCirculo = '#A3A49E';
-                break;
-            case 'psychic':
-                colorCirculo = '#FE9F92';
-                break;
-            case 'rock':
-                colorCirculo = '#D7CD90'
-                break;
-            case 'steel':
-                colorCirculo = '#58A6AA';
-                break;
-            case 'dragon':
-                colorCirculo = '#0180C7';
-                break;
-            case 'flying':
-                colorCirculo = '#A6C2F2';
-                break;
-            default:
-                colorCirculo = '#000000';
-                break;
-        }
-
-        return colorCirculo;
-    }
-
     function colocarFotoTipo (pokemon){
 
         var tipo = pokemon.types[0].type.name;
@@ -316,72 +236,100 @@ $(document).ready(function () {
         return foto;
     }
 
-    function ordenarPokedex(arrayPokemons){
-
-        $('#list-pokemon').empty();
-
-        arrayPokemons.forEach(function (pokemon) {
- 
-            var primeraLetra2 = pokemon.name.split('')[0].toUpperCase();
-            var nombreBien2 = (primeraLetra2 + pokemon.name.slice(1).replace("-", " "));
-            var template = `
-            <div class="col-md-4 mb-2">
-                <div class="borderCard" style="border-color: ${cambiarColorBorde(pokemon)}!important" idPokemon=${pokemon.id}>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img src="${pokemon.sprites.front_default}"
-                                 alt="${nombreBien}" class="imgPokemon"></img>
-                        </div>
-                        <div class="col-md-4">
-                            <p class="nombrePokemon"><strong>${nombreBien2}</strong><br><span class="idPokemon">
-                            #${pokemon.id}</span></p>
-                        </div>
-                        <div class="col-md-4">       
-                            <div class="tipo w-50"><img src="${colocarFotoTipo(pokemon)}"></img></div>                                    
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-
-        $('#list-pokemon').append(template);
+  
+    $('#btnPokAsc').click(function (ListaPokemon) {
+        
+        ordenarPorIdAsc(arrayPokemons);
     });
-/*
-    function ordenarPorIdAsc(pokedex){
 
-        var listaAscendente = pokedex.id.sort();
-        ordenarPokedex(listaAscendente);
+   
+    $('#btnPokDesc').click(function (ListaPokemon) {
+        
+        ordenarPorIdDesc(arrayPokemons);
+    });
 
-        return listaAscendente;
-    }
-*/
-    function ordenarPorIdDesc(pokemon){  
+    
+    $('#btnNomAsc').click(function (ListaPokemon) {
+        
+        ordenarPorNombreAsc(arrayPokemons);
+    });
 
-        var lista = arrayPokemons.sort(function(a,b){
+    
+    $('#btnNomDesc').click(function (ListaPokemon) {
+       
+        ordenarPorNombreDesc(arrayPokemons);
+    });
+
+    function ordenarPorIdAsc(arrayPokemons) {
+        var listaAscendente = arrayPokemons.sort(function (a, b) {
             return a.id - b.id;
-        }); 
-        var listaDescendente = lista.reverse(); 
-        ordenarPokedex(listaDescendente);
-
-        return listaDescendente;
-    }
-/*
-    function ordenarPorNombreAsc(pokemon){
-
-        var listaAsc = pokemon.name.sort();
-        ordenarPokedex(listaAsc);
-
-        return listaAsc;
-
+        });
+        actualizarPokemons(listaAscendente);
     }
 
-    function ordenarPorNombreDesc(pokemon){
-
-        var lista = pokemon.name.sort();
-        var listaDesc = lista.reverse();
-        ordenarPokedex(listaDesc);
-
-        return listaDesc;
+    function ordenarPorIdDesc(arrayPokemons) {
+        var listaDescendente = arrayPokemons.sort(function (a, b) {
+            return b.id - a.id;
+        });
+        actualizarPokemons(listaDescendente);
     }
 
-*/
-}});
+    function ordenarPorNombreAsc(arrayPokemons) {
+        var listaAscendente = arrayPokemons.sort(function (a, b) {
+            var nombreA = a.name.toUpperCase();
+            var nombreB = b.name.toUpperCase();
+            if (nombreA < nombreB)
+             return -1;
+            else if (nombreA > nombreB)
+            return 1;
+
+            return 0;
+        });
+        actualizarPokemons(listaAscendente);
+    }
+
+    function ordenarPorNombreDesc(arrayPokemons) {
+        var listaDescendente = arrayPokemons.sort(function (a, b) {
+            var nombreA = a.name.toUpperCase();
+            var nombreB = b.name.toUpperCase();
+            if (nombreA > nombreB)
+             return -1;
+            else if (nombreA < nombreB)
+             return 1;
+            
+            return 0;
+        });
+        actualizarPokemons(listaDescendente);
+    }
+
+
+    function actualizarPokemons(listaPokemons) {
+        $('#list-pokemon').empty();
+        listaPokemons.forEach(function (pokemon) {
+            var primeraLetra2 = pokemon.name.split('')[0].toUpperCase();
+                var nombreBien2 = (primeraLetra2 + pokemon.name.slice(1).replace("-", " "));
+
+                var template = `
+                    <div class="col-md-4 mb-2">
+                        <div class="borderCard" style="border-color: ${cambiarColorBorde(pokemon)}!important" idPokemon=${pokemon.id}>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img src="${pokemon.sprites.front_default}"
+                                         alt="${nombreBien2}" class="imgPokemon"></img>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="nombrePokemon"><strong>${nombreBien2}</strong><br><span class="idPokemon">
+                                    #${pokemon.id}</span></p>
+                                </div>
+                                <div class="col-md-4">       
+                                    <div class="tipo w-50"><img src="${colocarFotoTipo(pokemon)}"></img></div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+                $('#list-pokemon').append(template);
+        });
+    }
+
+});
