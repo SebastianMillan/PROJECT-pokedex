@@ -3,7 +3,7 @@ $(document).ready(function () {
     var pages;
     var numOffset = 0;
     var limit = 42;
-    var numPage = 0;
+    var numPage = 1;
     cargarPokemons(numOffset);
 
     $(document).on('click', '.page', function () {
@@ -14,7 +14,7 @@ $(document).ready(function () {
     $(document).on('click', '.avanz-page', function () {
         if (numPage < pages) {
             numPage++;
-            numOffset = limit * (numPage);
+            numOffset = limit * (numPage - 1);
             cargarPokemons(numOffset);
         }
 
@@ -22,7 +22,7 @@ $(document).ready(function () {
     $(document).on('click', '.return-page', function () {
         if (numPage > 1) {
             numPage--;
-            numOffset = limit * (numPage);
+            numOffset = limit * (numPage - 1);
             cargarPokemons(numOffset);
         }
 

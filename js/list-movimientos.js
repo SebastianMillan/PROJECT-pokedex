@@ -3,7 +3,7 @@ $(document).ready(() => {
     var pages;
     var numOffset = 0;
     var limit = 42;
-    var numPage = 0;
+    var numPage = 1;
     cargarMovimientos(numOffset);
 
     $(document).on('click', '.page', function () {
@@ -12,10 +12,9 @@ $(document).ready(() => {
         cargarMovimientos(numOffset);
     });
     $(document).on('click', '.avanz-page', function () {
-        console.log(pages)
         if (numPage < pages) {
             numPage++;
-            numOffset = limit * (numPage);
+            numOffset = limit * (numPage - 1);
             cargarMovimientos(numOffset);
         }
 
@@ -43,6 +42,8 @@ $(document).ready(() => {
                 templatePag = `<span class="p-1 page" page="${i}">${i}</span>`
                 $('.return-page').after(templatePag);
             }
+            var numeroPagina = Number(1) + Number(numPage);
+            $('.page:nth-child(' + numeroPagina + ')').css("font-weight", "bold");
             var listaMovimientos = respuesta.results;
             listaMovimientos.forEach(card => {
                 $.ajax({
