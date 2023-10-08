@@ -4,8 +4,9 @@ $(document).ready(() => {
     var numOffset = 0;
     var limit = 42;
     var numPage = 1;
+    var arrayMovimientos = [];
     cargarMovimientos(numOffset);
-
+            
     $(document).on('click', '.page', function () {
         numPage = $(this).attr('page')
         numOffset = limit * (numPage - 1);
@@ -51,6 +52,8 @@ $(document).ready(() => {
                     url: card.url,
 
                 }).done(mov => {
+                    arrayMovimientos.push(mov);                 
+
                     var cardMovimiento = `<div class="col-4 movimiento mb-3" movId="${mov.id}">
                         <div class="card-movimiento shadow" style="border-color: ${colorBorderTipo(mov.type.name)}!important" >
                             <div class="row">
@@ -277,4 +280,108 @@ $(document).ready(() => {
 
         return foto;
     }
+
+    $('#btnMovAsc').click(function (listaMovimientos) {
+        
+        ordenarPorIdAsc(arrayMovimientos);
+    });
+
+   
+    $('#btnMovDesc').click(function (listaMovimientos) {
+        
+        ordenarPorIdDesc(arrayMovimientos);
+    });
+
+    
+    $('#btnNomMovAsc').click(function (listaMovimientos) {
+        
+        ordenarPorNombreAsc(arrayMovimientos);
+    });
+
+    
+    $('#btnNomMovDesc').click(function (listaMovimientos) {
+       
+        ordenarPorNombreDesc(arrayMovimientos);
+    });
+
+    function ordenarPorIdAsc(arrayMovimientos) {
+        var listaPagina = arrayMovimientos.slice(numOffset, numOffset + limit);
+        
+        var listaAscendente = listaPagina.sort(function (a, b) {
+            return a.id - b.id;
+        });
+        actualizarMovimientos(listaAscendente);
+    }
+
+    function ordenarPorIdDesc(arrayMovimientos) {
+        var listaPagina = arrayMovimientos.slice(numOffset, numOffset + limit);
+
+        var listaDescendente = listaPagina.sort(function (a, b) {
+            return b.id - a.id;
+        });
+        actualizarMovimientos(listaDescendente);
+    }
+
+    function ordenarPorNombreAsc(arrayMovimientos) {
+        var listaPagina = arrayMovimientos.slice(numOffset, numOffset + limit);
+
+        var listaAscendente = listaPagina.sort(function (a, b) {
+            var nombreA = a.name.toUpperCase();
+            var nombreB = b.name.toUpperCase();
+            if (nombreA < nombreB)
+             return -1;
+            else if (nombreA > nombreB)
+            return 1;
+
+            return 0;
+        });
+        actualizarMovimientos(listaAscendente);
+    }
+
+    function ordenarPorNombreDesc(arrayMovimientos) {
+        var listaPagina = arrayMovimientos.slice(numOffset, numOffset + limit);
+
+        var listaDescendente = listaPagina.sort(function (a, b) {
+            var nombreA = a.name.toUpperCase();
+            var nombreB = b.name.toUpperCase();
+            if (nombreA > nombreB)
+             return -1;
+            else if (nombreA < nombreB)
+             return 1;
+            
+            return 0;
+        });
+        actualizarMovimientos(listaDescendente);
+    }
+
+    function actualizarMovimientos(listaMovimientos) {
+        
+        $('#lista-movimientos').empty();
+        
+        listaMovimientos.forEach(function (mov) {
+                var template = `<div class="col-4 movimiento mb-3" movId="${mov.id}">
+                <div class="card-movimiento shadow" style="border-color: ${colorBorderTipo(mov.type.name)}!important" >
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="img-tipo-movimiento p-1">
+                                <img src="${getImgModo(mov.damage_class.name)}" alt="tipo del ataque" class="w-100">
+                            </div>
+                        </div>
+                        <div class="col-4 p-3">
+                            <span class="fs-5 fw-bold">${formatNames(mov.name)}</span><br>
+                            <span>#<span>${mov.id}</span></span>
+                        </div>
+                        <div class="col-4 p-3">
+                            <span>Potencia: <span class="fw-bold">${mov.power != null ? mov.power : 0}</span></span><br>
+                            <span>Precisión: <span class="fw-bold">${mov.accuracy != null ? mov.accuracy : 0}</span></span><br>
+                            <span>PP: <span class="fw-bold">${mov.pp}</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+            $('#lista-movimientos').append(template);
+        });
+    }
+    
 });

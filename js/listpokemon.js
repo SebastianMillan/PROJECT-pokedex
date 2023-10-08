@@ -273,45 +273,53 @@ $(document).ready(function () {
     }
 
   
-    $('#btnPokAsc').click(function (ListaPokemon) {
+    $('#btnPokAsc').click(function (listaPokemons) {
         
         ordenarPorIdAsc(arrayPokemons);
     });
 
    
-    $('#btnPokDesc').click(function (ListaPokemon) {
+    $('#btnPokDesc').click(function (listaPokemons) {
         
         ordenarPorIdDesc(arrayPokemons);
     });
 
     
-    $('#btnNomAsc').click(function (ListaPokemon) {
+    $('#btnNomAsc').click(function (listaPokemons) {
         
         ordenarPorNombreAsc(arrayPokemons);
     });
 
     
-    $('#btnNomDesc').click(function (ListaPokemon) {
+    $('#btnNomDesc').click(function (listaPokemons) {
        
         ordenarPorNombreDesc(arrayPokemons);
     });
 
     function ordenarPorIdAsc(arrayPokemons) {
-        var listaAscendente = arrayPokemons.sort(function (a, b) {
+        
+        var listaPagina = arrayPokemons.slice(numOffset, numOffset + limit);
+
+        var listaAscendente = listaPagina.sort(function (a, b) {
             return a.id - b.id;
         });
         actualizarPokemons(listaAscendente);
     }
 
     function ordenarPorIdDesc(arrayPokemons) {
-        var listaDescendente = arrayPokemons.sort(function (a, b) {
+        var listaPagina = arrayPokemons.slice(numOffset, numOffset + limit);
+
+        var listaDescendente = listaPagina.sort(function (a, b) {
             return b.id - a.id;
         });
         actualizarPokemons(listaDescendente);
     }
 
     function ordenarPorNombreAsc(arrayPokemons) {
-        var listaAscendente = arrayPokemons.sort(function (a, b) {
+
+        var listaPagina = arrayPokemons.slice(numOffset, numOffset + limit);
+
+        var listaAscendente = listaPagina.sort(function (a, b) {
             var nombreA = a.name.toUpperCase();
             var nombreB = b.name.toUpperCase();
             if (nombreA < nombreB)
@@ -322,10 +330,13 @@ $(document).ready(function () {
             return 0;
         });
         actualizarPokemons(listaAscendente);
+        
     }
 
     function ordenarPorNombreDesc(arrayPokemons) {
-        var listaDescendente = arrayPokemons.sort(function (a, b) {
+        var listaPagina = arrayPokemons.slice(numOffset, numOffset + limit);
+
+        var listaDescendente = listaPagina.sort(function (a, b) {
             var nombreA = a.name.toUpperCase();
             var nombreB = b.name.toUpperCase();
             if (nombreA > nombreB)
@@ -338,13 +349,15 @@ $(document).ready(function () {
         actualizarPokemons(listaDescendente);
     }
 
-
     function actualizarPokemons(listaPokemons) {
         $('#list-pokemon').empty();
+
+        
         listaPokemons.forEach(function (pokemon) {
             var primeraLetra2 = pokemon.name.split('')[0].toUpperCase();
                 var nombreBien2 = (primeraLetra2 + pokemon.name.slice(1).replace("-", " "));
 
+                if(pokemon.name)
                 var template = `
                     <div class="col-md-4 mb-2">
                         <div class="borderCard" style="border-color: ${cambiarColorBorde(pokemon)}!important" idPokemon=${pokemon.id}>
